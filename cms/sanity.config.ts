@@ -9,7 +9,7 @@ export default defineConfig({
   name: "default",
   title: "JB Luthier",
 
-  projectId: "REPLACE_WITH_YOUR_PROJECT_ID",
+  projectId: "wf9oeu41",
   dataset: "production",
 
   plugins: [structureTool(), visionTool()],
