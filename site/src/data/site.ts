@@ -16,7 +16,7 @@ export const site = {
 
   email: "contato@jbluthieria.com",
 
-  instagram: "https://instagram.com/",
+  instagram: "https://www.instagram.com/jandirborges/",
 };
 
 /**
