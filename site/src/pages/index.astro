@@ -1,0 +1,135 @@
+---
+import Layout from "../layouts/Layout.astro";
+// Quando a foto real chegar, descomente as 2 linhas abaixo e remova o gradiente placeholder.
+// import { Image } from "astro:assets";
+// import heroBg from "../assets/home-hero.jpg";
+---
+
+<Layout>
+  <!-- Hero com foto de fundo + overlay escuro -->
+  <section class="relative isolate overflow-hidden text-white">
+    <!-- Camada da foto / placeholder -->
+    <div class="absolute inset-0 -z-20">
+      <!-- Placeholder até a foto real chegar (gradiente escuro com leve calor de madeira) -->
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(ellipse at 30% 40%, #2a1a10 0%, #120a06 45%, #050505 100%);"
+      >
+      </div>
+      <!--
+        Quando a foto real estiver em src/assets/home-hero.jpg, troque o div acima por:
+        <Image src={heroBg} alt="" class="h-full w-full object-cover" widths={[1280, 1920, 2400]} sizes="100vw" />
+      -->
+    </div>
+    <!-- Overlay escuro (suaviza a foto e garante legibilidade do texto) -->
+    <div class="absolute inset-0 -z-10 bg-black/45"></div>
+
+    <div class="mx-auto max-w-6xl px-6 pt-32 md:pt-48 pb-32 md:pb-48">
+      <p class="text-xs uppercase tracking-[0.3em] text-white/70 mb-8">
+        Luthieria artesanal
+      </p>
+      <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight max-w-4xl">
+        Cada violão, uma <em class="italic font-normal">história</em> esculpida em madeira.
+      </h1>
+      <p class="mt-10 max-w-xl text-lg text-white/80 leading-relaxed">
+        Violões feitos à mão por Jandir Borges. Construção, restauração e
+        manutenção de instrumentos de corda — peça por peça, com tempo e cuidado.
+      </p>
+      <div class="mt-12 flex flex-wrap gap-4">
+        <a
+          href="/catalogo"
+          class="inline-flex items-center gap-3 bg-white text-[var(--color-ink)] px-7 py-4 text-sm uppercase tracking-wide hover:bg-white/90 transition-colors"
+        >
+          Ver catálogo
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="/servicos"
+          class="inline-flex items-center gap-3 border border-white px-7 py-4 text-sm uppercase tracking-wide hover:bg-white hover:text-[var(--color-ink)] transition-colors"
+        >
+          Conheça os serviços
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catálogo em destaque (placeholder até integrar Sanity) -->
+  <section class="border-t border-[var(--color-line)]">
+    <div class="mx-auto max-w-6xl px-6 py-24">
+      <div class="flex items-end justify-between mb-12">
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-3">
+            Catálogo
+          </p>
+          <h2 class="font-serif text-4xl md:text-5xl tracking-tight">
+            Instrumentos em destaque
+          </h2>
+        </div>
+        <a href="/catalogo" class="hidden md:inline-block text-sm uppercase tracking-wide underline underline-offset-4 hover:text-[var(--color-muted)]">
+          Ver todos
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {
+          [
+            { title: "Modelo OM", wood: "Pau-ferro & Spruce" },
+            { title: "Modelo Clássico", wood: "Jacarandá & Cedro" },
+            { title: "Modelo Folk", wood: "Mogno & Spruce" },
+          ].map((g) => (
+            <a href="/catalogo" class="group block">
+              <div class="aspect-[3/4] bg-[var(--color-subtle)] overflow-hidden">
+                <div class="w-full h-full flex items-center justify-center text-[var(--color-muted)] text-sm group-hover:scale-105 transition-transform duration-700">
+                  foto do violão
+                </div>
+              </div>
+              <div class="mt-4">
+                <h3 class="font-serif text-xl">{g.title}</h3>
+                <p class="text-sm text-[var(--color-muted)] mt-1">{g.wood}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Serviços -->
+  <section class="bg-[var(--color-ink)] text-white">
+    <div class="mx-auto max-w-6xl px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-white/50 mb-3">Serviços</p>
+        <h2 class="font-serif text-4xl md:text-5xl tracking-tight">
+          Conserto, regulagem e restauração.
+        </h2>
+        <p class="mt-6 text-white/70 max-w-md leading-relaxed">
+          Cuidado especializado para violões, guitarras, contrabaixos e
+          instrumentos de corda em geral. Cada peça é avaliada e tratada com
+          rigor de luthieria.
+        </p>
+        <a
+          href="/servicos"
+          class="mt-10 inline-flex items-center gap-3 border border-white px-7 py-4 text-sm uppercase tracking-wide hover:bg-white hover:text-[var(--color-ink)] transition-colors"
+        >
+          Lista completa de serviços
+        </a>
+      </div>
+      <ul class="space-y-6">
+        {
+          [
+            "Regulagem geral",
+            "Retífica e troca de trastes",
+            "Nut e rastilho em osso",
+            "Colagem e fabricação de cavalete",
+            "Blindagem e parte elétrica",
+          ].map((s) => (
+            <li class="flex items-baseline gap-4 border-b border-white/10 pb-5">
+              <span class="font-serif text-2xl text-white/40">—</span>
+              <span class="text-lg">{s}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Layout>

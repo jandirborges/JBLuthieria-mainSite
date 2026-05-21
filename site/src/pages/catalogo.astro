@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Catálogo — JB Luthier" description="Catálogo de violões artesanais JB Luthier.">
+  <section class="mx-auto max-w-6xl px-6 pt-24 pb-12">
+    <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-6">Catálogo</p>
+    <h1 class="font-serif text-5xl md:text-6xl tracking-tight max-w-3xl">
+      Violões feitos à mão.
+    </h1>
+    <p class="mt-6 text-[var(--color-muted)] max-w-xl leading-relaxed">
+      Cada instrumento abaixo é uma peça única, construída do zero na oficina.
+      Em breve esta página vai ler diretamente do nosso CMS — por enquanto,
+      placeholders.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 pb-32">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        Array.from({ length: 6 }).map((_, i) => (
+          <article class="group">
+            <div class="aspect-[3/4] bg-[var(--color-subtle)] overflow-hidden">
+              <div class="w-full h-full flex items-center justify-center text-[var(--color-muted)] text-sm">
+                violão #{i + 1}
+              </div>
+            </div>
+            <div class="mt-4">
+              <h2 class="font-serif text-xl">Modelo em breve</h2>
+              <p class="text-sm text-[var(--color-muted)] mt-1">Especificações via CMS</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

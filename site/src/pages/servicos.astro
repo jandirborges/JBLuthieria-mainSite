@@ -1,0 +1,102 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const services = [
+  {
+    title: "Regulagem geral",
+    body: "Ajuste completo do instrumento: tensor, altura de cordas, oitavas e curvatura do braço para a melhor tocabilidade.",
+  },
+  {
+    title: "Retífica de trastes",
+    body: "Nivelamento, coroamento e polimento dos trastes existentes para eliminar trastejamento e recuperar a afinação ao longo da escala.",
+  },
+  {
+    title: "Troca de trastes",
+    body: "Substituição completa dos trastes desgastados, com material de qualidade e acabamento profissional.",
+  },
+  {
+    title: "Nut (pestana) de osso",
+    body: "Confecção sob medida de pestana em osso — material superior ao plástico, melhora sustain, brilho e afinação.",
+  },
+  {
+    title: "Rastilho de osso",
+    body: "Rastilho feito à mão em osso, ajustado individualmente para a altura, oitavas e timbre do seu instrumento.",
+  },
+  {
+    title: "Colagem de cavalete",
+    body: "Reparo de cavalete descolado — desmontagem, limpeza, recolagem e prensagem com técnica de luthieria.",
+  },
+  {
+    title: "Fabricação de cavalete",
+    body: "Cavalete novo feito sob medida quando o original está danificado além de reparo.",
+  },
+  {
+    title: "Colagem de headstock",
+    body: "Recuperação de headstock (mão) quebrado — colagem estrutural com reforço quando necessário, devolvendo segurança ao instrumento.",
+  },
+  {
+    title: "Instalação e troca de tensor",
+    body: "Instalação de tensor (truss rod) em instrumentos que não possuem ou substituição em casos de tensor travado/danificado.",
+  },
+  {
+    title: "Blindagem",
+    body: "Blindagem completa da cavidade eletrônica com fita de cobre/tinta condutiva para eliminar microfonia e ruídos.",
+  },
+  {
+    title: "Parte elétrica",
+    body: "Troca de captadores, potenciômetros, chaves, jacks e revisão de circuito em geral.",
+  },
+];
+---
+
+<Layout title="Serviços — JB Luthier" description="Serviços de luthieria especializada: regulagem, trastes, nut, rastilho, cavalete, blindagem e mais.">
+  <section class="mx-auto max-w-6xl px-6 pt-24 pb-12">
+    <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-6">Serviços</p>
+    <h1 class="font-serif text-5xl md:text-6xl tracking-tight max-w-3xl">
+      Luthieria especializada em instrumentos de corda.
+    </h1>
+    <p class="mt-6 text-[var(--color-muted)] max-w-xl leading-relaxed">
+      Atendimento personalizado para violões, guitarras, contrabaixos, cavaquinhos
+      e outros instrumentos de corda. Orçamento sem compromisso.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 pb-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 border-t border-[var(--color-line)] pt-12">
+      {
+        services.map((s, i) => (
+          <article class="flex gap-6">
+            <span class="font-serif text-3xl text-[var(--color-muted)] tabular-nums">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h2 class="font-serif text-2xl">{s.title}</h2>
+              <p class="mt-3 text-[var(--color-muted)] leading-relaxed">{s.body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="mt-16 text-center text-[var(--color-muted)] italic max-w-xl mx-auto">
+      Não viu o serviço que precisa? A oficina atende uma variedade ampla de
+      reparos em instrumentos de corda — fale com a gente.
+    </p>
+  </section>
+
+  <section class="bg-[var(--color-ink)] text-white">
+    <div class="mx-auto max-w-6xl px-6 py-20 text-center">
+      <h2 class="font-serif text-3xl md:text-4xl tracking-tight">
+        Quer um orçamento? Fale com a gente.
+      </h2>
+      <a
+        href="https://wa.me/5500000000000"
+        target="_blank"
+        rel="noopener"
+        class="mt-8 inline-flex items-center gap-3 border border-white px-7 py-4 text-sm uppercase tracking-wide hover:bg-white hover:text-[var(--color-ink)] transition-colors"
+      >
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </section>
+</Layout>
