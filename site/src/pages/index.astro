@@ -1,11 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ViolaoCard from "../components/ViolaoCard.astro";
-import { violoes } from "../data/violoes";
+import { getViolaes } from "../data/violoes";
 // Quando a foto real chegar, descomente as 2 linhas abaixo e remova o gradiente placeholder.
 // import { Image } from "astro:assets";
 // import heroBg from "../assets/home-hero.jpg";
 
+const violoes = await getViolaes();
 const destaques = violoes.slice(0, 3);
 ---
 
@@ -33,7 +34,7 @@ const destaques = violoes.slice(0, 3);
         Luthieria artesanal
       </p>
       <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight max-w-4xl">
-        Cada violão, uma <em class="italic font-normal">história</em> esculpida em madeira.
+        Uma <em class="italic font-normal">HISTÓRIA</em> esculpida em madeira.
       </h1>
       <p class="mt-10 max-w-xl text-lg text-white/80 leading-relaxed">
         Violões feitos à mão por Jandir Borges. Construção, restauração e

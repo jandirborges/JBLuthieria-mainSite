@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { site, whatsappLink } from "../data/site";
 ---
 
 <Layout title="Contato — JB Luthier" description="Entre em contato com o luthier Jandir Borges.">
@@ -18,21 +19,21 @@ import Layout from "../layouts/Layout.astro";
         <div>
           <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-2">WhatsApp</p>
           <a
-            href="https://wa.me/5500000000000"
+            href={whatsappLink()}
             target="_blank"
             rel="noopener"
             class="font-serif text-2xl underline underline-offset-4 hover:text-[var(--color-muted)]"
           >
-            (00) 00000-0000
+            {site.whatsapp.display}
           </a>
         </div>
         <div>
           <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-2">E-mail</p>
           <a
-            href="mailto:contato@jbluthieria.com"
+            href={`mailto:${site.email}`}
             class="font-serif text-2xl underline underline-offset-4 hover:text-[var(--color-muted)]"
           >
-            contato@jbluthieria.com
+            {site.email}
           </a>
         </div>
         <div>

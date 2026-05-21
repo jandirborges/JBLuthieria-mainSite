@@ -1,0 +1,258 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getViolaes, statusLabel, type Violao } from "../../data/violoes";
+import { whatsappLink } from "../../data/site";
+
+export async function getStaticPaths() {
+  const violoes = await getViolaes();
+  return violoes.map((v) => ({
+    params: { slug: v.slug },
+    props: { violao: v },
+  }));
+}
+
+interface Props {
+  violao: Violao;
+}
+
+const { violao } = Astro.props;
+const isAvailable = violao.status === "a-venda";
+const message = isAvailable
+  ? `Olá! Tenho interesse no ${violao.title}.`
+  : `Olá! Vi o ${violao.title} no site e gostaria de encomendar um parecido.`;
+
+// Garante pelo menos um item pra renderizar o slot (placeholder quando 0 fotos)
+const photos = violao.photos.length > 0 ? violao.photos : [{ url: "" }];
+const hasMultiplePhotos = photos.length > 1;
+---
+
+<Layout
+  title={`${violao.title} — JB Luthier`}
+  description={violao.description ?? `Violão ${violao.title} feito à mão por Jandir Borges.`}
+>
+  <section class="mx-auto max-w-6xl px-6 pt-12 pb-24">
+    <a
+      href="/catalogo"
+      class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors"
+    >
+      <span aria-hidden="true">←</span>
+      Voltar ao catálogo
+    </a>
+
+    <div class="mt-8 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-16">
+      <!-- Galeria -->
+      <div>
+        <div
+          id="carousel"
+          class="relative aspect-[4/5] bg-[var(--color-subtle)] overflow-hidden"
+        >
+          <div
+            data-carousel-track
+            class="flex h-full overflow-x-auto snap-x snap-mandatory scroll-smooth"
+            style="scrollbar-width: none;"
+          >
+            {
+              photos.map((photo, i) => (
+                <div
+                  data-slide
+                  class="w-full h-full flex-shrink-0 snap-center relative"
+                >
+                  {photo.url ? (
+                    <img
+                      src={photo.url}
+                      alt={photo.alt ?? `${violao.title} — foto ${i + 1}`}
+                      class="w-full h-full object-cover"
+                      loading={i === 0 ? "eager" : "lazy"}
+                    />
+                  ) : (
+                    <div class="w-full h-full flex items-center justify-center text-[var(--color-muted)] text-sm">
+                      fotos em breve
+                    </div>
+                  )}
+                </div>
+              ))
+            }
+          </div>
+
+          {
+            hasMultiplePhotos && (
+              <>
+                <button
+                  data-carousel-prev
+                  type="button"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-[var(--color-ink)] w-10 h-10 flex items-center justify-center text-lg shadow-sm transition-colors"
+                  aria-label="Foto anterior"
+                >
+                  ←
+                </button>
+                <button
+                  data-carousel-next
+                  type="button"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-[var(--color-ink)] w-10 h-10 flex items-center justify-center text-lg shadow-sm transition-colors"
+                  aria-label="Próxima foto"
+                >
+                  →
+                </button>
+                <div
+                  data-carousel-counter
+                  class="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2 py-1 tracking-wider"
+                >
+                  1 / {photos.length}
+                </div>
+              </>
+            )
+          }
+        </div>
+
+        {
+          hasMultiplePhotos && (
+            <div class="flex gap-2 mt-3 overflow-x-auto" style="scrollbar-width: thin;">
+              {photos.map((photo, i) => (
+                <button
+                  data-thumb
+                  data-index={i}
+                  type="button"
+                  class="aspect-square w-20 flex-shrink-0 bg-[var(--color-subtle)] overflow-hidden border-2 border-transparent hover:border-[var(--color-muted)] transition-colors"
+                  aria-label={`Ir para foto ${i + 1}`}
+                >
+                  {photo.url && (
+                    <img
+                      src={photo.url}
+                      alt=""
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Sidebar com informações -->
+      <aside class="space-y-10">
+        <div>
+          <span
+            class:list={[
+              "inline-block text-[10px] uppercase tracking-[0.2em] px-3 py-1.5",
+              isAvailable
+                ? "bg-[var(--color-ink)] text-white"
+                : "bg-white text-[var(--color-ink)] border border-[var(--color-line)]",
+            ]}
+          >
+            {statusLabel(violao.status)}
+          </span>
+          <h1 class="font-serif text-4xl md:text-5xl tracking-tight mt-6 leading-tight">
+            {violao.title}
+          </h1>
+          {
+            violao.wood && (
+              <p class="text-[var(--color-muted)] mt-3 text-lg">{violao.wood}</p>
+            )
+          }
+        </div>
+
+        {
+          violao.description && (
+            <p class="text-[var(--color-ink)] leading-relaxed whitespace-pre-line">
+              {violao.description}
+            </p>
+          )
+        }
+
+        {
+          violao.specifications && violao.specifications.length > 0 && (
+            <div>
+              <h2 class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-5">
+                Especificações
+              </h2>
+              <dl class="space-y-0">
+                {violao.specifications.map((s) => (
+                  <div class="flex justify-between gap-4 border-b border-[var(--color-line)] py-3 text-sm">
+                    <dt class="text-[var(--color-muted)]">{s.label}</dt>
+                    <dd class="font-medium text-right">{s.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )
+        }
+
+        <a
+          href={whatsappLink(message)}
+          target="_blank"
+          rel="noopener"
+          class="block bg-[var(--color-ink)] text-white text-center py-5 text-sm uppercase tracking-wide hover:bg-black/80 transition-colors"
+        >
+          {isAvailable ? "Tenho interesse — WhatsApp" : "Falar sobre uma encomenda"}
+        </a>
+      </aside>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Esconde scrollbar nativa do carrossel principal */
+  [data-carousel-track]::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  const carousel = document.getElementById("carousel");
+  if (carousel) {
+    const track = carousel.querySelector<HTMLElement>("[data-carousel-track]");
+    const slides = carousel.querySelectorAll<HTMLElement>("[data-slide]");
+    const thumbs = document.querySelectorAll<HTMLButtonElement>("[data-thumb]");
+    const prev = carousel.querySelector<HTMLButtonElement>("[data-carousel-prev]");
+    const next = carousel.querySelector<HTMLButtonElement>("[data-carousel-next]");
+    const counter = carousel.querySelector<HTMLElement>("[data-carousel-counter]");
+
+    if (track && slides.length > 0) {
+      const scrollToIndex = (index: number) => {
+        const clamped = Math.max(0, Math.min(index, slides.length - 1));
+        track.scrollTo({
+          left: clamped * track.clientWidth,
+          behavior: "smooth",
+        });
+      };
+
+      const currentIndex = () =>
+        Math.round(track.scrollLeft / track.clientWidth);
+
+      thumbs.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const i = parseInt(btn.dataset.index ?? "0", 10);
+          scrollToIndex(i);
+        });
+      });
+
+      prev?.addEventListener("click", () => scrollToIndex(currentIndex() - 1));
+      next?.addEventListener("click", () => scrollToIndex(currentIndex() + 1));
+
+      // Atualiza contador e destaque do thumbnail conforme rola
+      const updateActive = () => {
+        const i = currentIndex();
+        if (counter) counter.textContent = `${i + 1} / ${slides.length}`;
+        thumbs.forEach((btn, idx) => {
+          if (idx === i) {
+            btn.classList.add("border-[var(--color-ink)]");
+            btn.classList.remove("border-transparent");
+          } else {
+            btn.classList.remove("border-[var(--color-ink)]");
+            btn.classList.add("border-transparent");
+          }
+        });
+      };
+      track.addEventListener("scroll", updateActive, { passive: true });
+      updateActive();
+
+      // Teclado: setas esquerda/direita
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") scrollToIndex(currentIndex() - 1);
+        if (e.key === "ArrowRight") scrollToIndex(currentIndex() + 1);
+      });
+    }
+  }
+</script>

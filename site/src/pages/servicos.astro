@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { whatsappLink } from "../data/site";
 
 const services = [
   {
@@ -90,7 +91,7 @@ const services = [
         Quer um orçamento? Fale com a gente.
       </h2>
       <a
-        href="https://wa.me/5500000000000"
+        href={whatsappLink("Olá! Gostaria de um orçamento de luthieria.")}
         target="_blank"
         rel="noopener"
         class="mt-8 inline-flex items-center gap-3 border border-white px-7 py-4 text-sm uppercase tracking-wide hover:bg-white hover:text-[var(--color-ink)] transition-colors"

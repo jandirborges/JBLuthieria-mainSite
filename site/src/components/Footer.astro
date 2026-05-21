@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import logoWhite from "../assets/logo-white.png";
+import { site, whatsappLink } from "../data/site";
 
 const year = new Date().getFullYear();
 ---
@@ -29,17 +30,17 @@ const year = new Date().getFullYear();
       <h3 class="text-xs uppercase tracking-widest text-white/50 mb-4">Contato</h3>
       <ul class="space-y-3 text-sm text-white/80">
         <li>
-          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener" class="hover:text-white">
-            WhatsApp
+          <a href={whatsappLink()} target="_blank" rel="noopener" class="hover:text-white">
+            WhatsApp {site.whatsapp.display}
           </a>
         </li>
         <li>
-          <a href="mailto:contato@jbluthieria.com" class="hover:text-white">
-            contato@jbluthieria.com
+          <a href={`mailto:${site.email}`} class="hover:text-white">
+            {site.email}
           </a>
         </li>
         <li>
-          <a href="https://instagram.com/" target="_blank" rel="noopener" class="hover:text-white">
+          <a href={site.instagram} target="_blank" rel="noopener" class="hover:text-white">
             Instagram
           </a>
         </li>
