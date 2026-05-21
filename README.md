@@ -39,7 +39,7 @@ para setup inicial e instruções de uso para o luthier.
 - [x] WhatsApp centralizado em `site/src/data/site.ts`
 - [x] Deploy na Vercel + GitHub
 - [x] Sanity scaffold (config + schemas)
-- [ ] Criar projeto Sanity, fazer deploy do Studio
+- [x] Criar projeto Sanity (ID `wf9oeu41`) e deploy do Studio (`jbluthieria.sanity.studio`)
 - [ ] Configurar webhook Sanity → Vercel (auto-rebuild)
 - [ ] Conteúdo real (fotos, textos, contatos finais)
 - [ ] Conectar domínio jbluthieria.com na Vercel
