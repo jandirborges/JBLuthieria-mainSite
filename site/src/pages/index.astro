@@ -1,8 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ViolaoCard from "../components/ViolaoCard.astro";
+import { violoes } from "../data/violoes";
 // Quando a foto real chegar, descomente as 2 linhas abaixo e remova o gradiente placeholder.
 // import { Image } from "astro:assets";
 // import heroBg from "../assets/home-hero.jpg";
+
+const destaques = violoes.slice(0, 3);
 ---
 
 <Layout>
@@ -53,46 +57,36 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- Catálogo em destaque (placeholder até integrar Sanity) -->
-  <section class="border-t border-[var(--color-line)]">
-    <div class="mx-auto max-w-6xl px-6 py-24">
-      <div class="flex items-end justify-between mb-12">
-        <div>
-          <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-3">
-            Catálogo
-          </p>
-          <h2 class="font-serif text-4xl md:text-5xl tracking-tight">
-            Instrumentos em destaque
-          </h2>
-        </div>
-        <a href="/catalogo" class="hidden md:inline-block text-sm uppercase tracking-wide underline underline-offset-4 hover:text-[var(--color-muted)]">
-          Ver todos
-        </a>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {
-          [
-            { title: "Modelo OM", wood: "Pau-ferro & Spruce" },
-            { title: "Modelo Clássico", wood: "Jacarandá & Cedro" },
-            { title: "Modelo Folk", wood: "Mogno & Spruce" },
-          ].map((g) => (
-            <a href="/catalogo" class="group block">
-              <div class="aspect-[3/4] bg-[var(--color-subtle)] overflow-hidden">
-                <div class="w-full h-full flex items-center justify-center text-[var(--color-muted)] text-sm group-hover:scale-105 transition-transform duration-700">
-                  foto do violão
-                </div>
-              </div>
-              <div class="mt-4">
-                <h3 class="font-serif text-xl">{g.title}</h3>
-                <p class="text-sm text-[var(--color-muted)] mt-1">{g.wood}</p>
-              </div>
+  {
+    destaques.length > 0 && (
+      <section class="border-t border-[var(--color-line)]">
+        <div class="mx-auto max-w-6xl px-6 py-24">
+          <div class="flex items-end justify-between mb-12">
+            <div>
+              <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-3">
+                Catálogo
+              </p>
+              <h2 class="font-serif text-4xl md:text-5xl tracking-tight">
+                Instrumentos em destaque
+              </h2>
+            </div>
+            <a
+              href="/catalogo"
+              class="hidden md:inline-block text-sm uppercase tracking-wide underline underline-offset-4 hover:text-[var(--color-muted)]"
+            >
+              Ver todos
             </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12">
+            {destaques.map((v) => (
+              <ViolaoCard violao={v} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <!-- Serviços -->
   <section class="bg-[var(--color-ink)] text-white">

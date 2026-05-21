@@ -1,37 +1,52 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ViolaoCard from "../components/ViolaoCard.astro";
+import { violoes } from "../data/violoes";
+
+const hasViolaes = violoes.length > 0;
 ---
 
-<Layout title="Catálogo — JB Luthier" description="Catálogo de violões artesanais JB Luthier.">
+<Layout
+  title="Catálogo — JB Luthier"
+  description="Catálogo de violões artesanais JB Luthier."
+>
   <section class="mx-auto max-w-6xl px-6 pt-24 pb-12">
-    <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-6">Catálogo</p>
+    <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-muted)] mb-6">
+      Catálogo
+    </p>
     <h1 class="font-serif text-5xl md:text-6xl tracking-tight max-w-3xl">
       Violões feitos à mão.
     </h1>
     <p class="mt-6 text-[var(--color-muted)] max-w-xl leading-relaxed">
       Cada instrumento abaixo é uma peça única, construída do zero na oficina.
-      Em breve esta página vai ler diretamente do nosso CMS — por enquanto,
-      placeholders.
     </p>
   </section>
 
   <section class="mx-auto max-w-6xl px-6 pb-32">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {
-        Array.from({ length: 6 }).map((_, i) => (
-          <article class="group">
-            <div class="aspect-[3/4] bg-[var(--color-subtle)] overflow-hidden">
-              <div class="w-full h-full flex items-center justify-center text-[var(--color-muted)] text-sm">
-                violão #{i + 1}
-              </div>
-            </div>
-            <div class="mt-4">
-              <h2 class="font-serif text-xl">Modelo em breve</h2>
-              <p class="text-sm text-[var(--color-muted)] mt-1">Especificações via CMS</p>
-            </div>
-          </article>
-        ))
-      }
-    </div>
+    {
+      hasViolaes ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+          {violoes.map((v) => (
+            <ViolaoCard violao={v} />
+          ))}
+        </div>
+      ) : (
+        <div class="border-t border-[var(--color-line)] pt-24 text-center">
+          <p class="font-serif text-3xl md:text-4xl">Catálogo em montagem.</p>
+          <p class="mt-4 text-[var(--color-muted)] max-w-md mx-auto leading-relaxed">
+            Em breve os primeiros violões estarão disponíveis aqui. Enquanto
+            isso, fale com a gente para encomenda sob medida.
+          </p>
+          <a
+            href="https://wa.me/5500000000000"
+            target="_blank"
+            rel="noopener"
+            class="mt-10 inline-flex items-center gap-3 bg-[var(--color-ink)] text-white px-7 py-4 text-sm uppercase tracking-wide hover:bg-black/80 transition-colors"
+          >
+            Falar no WhatsApp
+          </a>
+        </div>
+      )
+    }
   </section>
 </Layout>

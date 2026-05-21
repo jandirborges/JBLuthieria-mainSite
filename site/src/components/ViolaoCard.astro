@@ -1,0 +1,47 @@
+---
+import type { Violao } from "../data/violoes";
+import { statusLabel } from "../data/violoes";
+
+interface Props {
+  violao: Violao;
+}
+
+const { violao } = Astro.props;
+const label = statusLabel(violao.status);
+const isAvailable = violao.status === "a-venda";
+const cover = violao.photos[0];
+---
+
+<article class="group">
+  <div class="relative aspect-[3/4] bg-[var(--color-subtle)] overflow-hidden">
+    <span
+      class:list={[
+        "absolute top-3 left-3 z-10 text-[10px] uppercase tracking-[0.2em] px-3 py-1.5",
+        isAvailable
+          ? "bg-[var(--color-ink)] text-white"
+          : "bg-white text-[var(--color-ink)] border border-[var(--color-line)]",
+      ]}
+    >
+      {label}
+    </span>
+
+    {
+      cover ? (
+        <img
+          src={cover}
+          alt={violao.title}
+          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+      ) : (
+        <div class="w-full h-full flex items-center justify-center text-[var(--color-muted)] text-sm">
+          foto em breve
+        </div>
+      )
+    }
+  </div>
+
+  <div class="mt-4">
+    <h3 class="font-serif text-xl">{violao.title}</h3>
+    <p class="text-sm text-[var(--color-muted)] mt-1">{violao.wood}</p>
+  </div>
+</article>
